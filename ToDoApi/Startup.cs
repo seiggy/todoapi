@@ -57,7 +57,7 @@ namespace ToDoApi
             }).AddJwtBearer(options =>
             {
                 options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
-                options.Audience = "https://localhost:44322";
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
             services.AddSwaggerGen(c =>
@@ -65,9 +65,9 @@ namespace ToDoApi
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "ToDo V1", Version = "1.0.0.0" });
                 c.AddSecurityDefinition("oauth2", new OAuth2Scheme()
                 {
-                    AuthorizationUrl = $"https://{Configuration["Auth0:Domain"]}/authorize?audience=https://localhost:44322",
+                    AuthorizationUrl = $"https://{Configuration["Auth0:Domain"]}/authorize?audience={Configuration["Auth0:ApiIdentifier"]}",
                     Flow = "implicit",
-                    TokenUrl = "https://dev-m42ttbaz.auth0.com/token",
+                    TokenUrl = $"https://{Configuration["Auth0:Domain"]}/token",
                     Scopes = new Dictionary<string, string> {
                             { "read", "User Profile"},
                             { "openid", "User Profile" }
