@@ -19,11 +19,6 @@ namespace ToDoApi
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(
-                    new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json")
-                        .AddEnvironmentVariables()
-                        .Build())
                 .UseStartup<Startup>();
     }
 }
