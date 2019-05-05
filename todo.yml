@@ -1,0 +1,25 @@
+- hosts: localhost
+  connection: local
+  vars:
+    resource_group: zwayToDoDemo
+    webapp_name: zwtodoapi
+    plan_name: myAppServicePlan
+    location: eastus
+  tasks:
+    - name: create a resource group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+
+    - name: create an app service
+      azure_rm_webapp:
+        resource_group: "{{ resource_group }}"
+        name: "{{ webapp_name }}"
+        plan:
+          resource_group: "{{ resource_group }}"
+          name: "{{ plan_name }}"
+          is_linux: true
+          sku: S1
+          number_of_workers: 1
+        container_settings:
+          name: zway/todoapi
